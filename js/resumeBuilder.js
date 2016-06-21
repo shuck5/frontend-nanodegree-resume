@@ -62,11 +62,24 @@ var education = {
 		}
 	]
 
-}
+};
 
 var projects = {
-	"Portfolio": "https://github.com/shuck5/Portfolio",
-}
+	"projects": [
+	{
+		"title": "Portfolio",
+		"dates": "06/2016",
+		"description": "https://github.com/shuck5/Portfolio",
+		"images": ["images/fry.jpg"]
+	},
+	{
+		"title": "TBD",
+		"dates": "TBD",
+		"description": "TBD",
+		"images": ["images/fry.jpg"]
+	}
+	]
+};
 
 if (bio.skills.length > 0) {
 
@@ -79,7 +92,7 @@ if (bio.skills.length > 0) {
 	$("#skills").append(formattedSkills);
 	formattedSkills = HTMLskills.replace("%data%", bio.skills[3]);
 	$("#skills").append(formattedSkills);
-}
+};
 
 function displayWork() {
 	for (job in work.jobs) {
@@ -110,8 +123,27 @@ function inName(name) {
 	console.log(name);
 	name[1] = name[1].toUpperCase();
 	name[0] = name[0].slice(0, 1).toUpperCase() + name[0].slice(1).toLowerCase();
-	return name[0] + " "+ name[1];
+	return name[0] + " "+ name[1]
 
 };
 $("#main").append(internationalizeButton);
 // $("#main").append(education.schools);
+
+// projects.display = function() {
+	for (project in projects.projects) {
+		$("#projects").append(HTMLprojectStart);
+		var formattedTitle = HTMLprojectTitle.replace("%data%", projects.projects[project].title);
+		$(".project-entry:last").append(formattedTitle);
+		var formattedDates = HTMLprojectDates.replace("%data%", projects.projects[project].dates);
+		$(".project-entry:last").append(formattedDates);
+		var formattedDescription = HTMLprojectDescription.replace("%data%", projects.projects[project].description);
+		$(".project-entry:last").append(formattedDescription);
+		if (projects.projects[project].images.length > 0) {
+			for (image in projects.projects[project].images) {
+				var formattedImage = HTMLprojectImage.replace("%data%", projects.projects[project].images[image]);
+				$(".project-entry:last").append(formattedImage)
+			}
+
+		}
+	}
+// }
