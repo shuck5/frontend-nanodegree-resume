@@ -1,14 +1,14 @@
-var formattedName = HTMLheaderName.replace("%data%", "Kadie Ford");
-var formattedRole = HTMLheaderRole.replace("%data%", "Front-End Web Developer");
-$("#header").prepend(formattedName);
+
+
 $("#header").prepend(formattedRole);
+$("#header").prepend(formattedName);
 var bio = {
 	"name": "Kadie Ford",
 	"address": "2187 Patton Ave, Napa CA 94559",
 	"phone": "714-788-2274",
 	"email": "kadie.ford@gmail.com",
 	"role": "Front-End Web Developer",
-	"photo": "images/profile.jpg",
+	"photo": ["images/profile.jpg"],
 	"welcome": "Welcome to my website!",
 	"skills": ["HTML5", "CSS3", "JavaScript", "Twitter Bootstrap"]
 };
@@ -129,7 +129,7 @@ function inName(name) {
 $("#main").append(internationalizeButton);
 // $("#main").append(education.schools);
 
-// projects.display = function() {
+projects.display = (function() {
 	for (project in projects.projects) {
 		$("#projects").append(HTMLprojectStart);
 		var formattedTitle = HTMLprojectTitle.replace("%data%", projects.projects[project].title);
@@ -146,4 +146,5 @@ $("#main").append(internationalizeButton);
 
 		}
 	}
-// }
+})();
+$("#mapDiv").append(googleMap);
