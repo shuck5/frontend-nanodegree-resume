@@ -1,19 +1,63 @@
 
-
-$("#header").prepend(formattedRole);
-$("#header").prepend(formattedName);
 var bio = {
 	"name": "Kadie Ford",
-	"address": "2187 Patton Ave, Napa CA 94559",
-	"phone": "714-788-2274",
-	"email": "kadie.ford@gmail.com",
 	"role": "Front-End Web Developer",
-	"photo": ["images/profile.jpg"],
-	"welcome": "Welcome to my website!",
+	"contacts": [{
+		"mobile": "714-788-2274",
+		"email": "kadie.ford@gmail.com",
+		"github": "http://github.com/shuck5",
+		"location": "Napa, CA"
+	}],
+	"biopic": ["images/profile.jpg"],
+	"welcomeMessage": "Welcome to my website!",
 	"skills": ["HTML5", "CSS3", "JavaScript", "Twitter Bootstrap"]
 };
 
-// $("#main").append(bio.name);
+var education = {
+	"schools": [
+		{
+		"name": "Arizona State University",
+		"location": "Tempe, AZ",
+		"degree": "B.A." ,
+		"major": "Psychology",
+		"dates": "May 2016",
+		"url": "http://asu.edu"
+		},
+
+		{
+		"name": "Napa Valley College",
+		"location": "Napa, CA",
+		"degree": "A.A.",
+		"major": "Psychology",
+		"dates": "May 2011",
+		"url": ["http://napavalleycollege.com"]
+		}
+
+	],
+
+	"onlineCourses": [
+		{
+		"title": "Front-End Web Developement Nanodegree",
+		"school": "Udacity",
+		"date": "June 2016",
+		"url": "http://udacity.com/"
+		},
+		
+		{
+		"title": "Front-End Web Developement Track",
+		"school": "Treehouse",
+		"date": "May 2016",
+		"url": "http://teamtreehouse.com/"
+		},
+		
+		{
+		"title": "JavaScript",
+		"school": "Code School",
+		"date": "May 2016",
+		"url": "http://codeschool.com/"
+		}
+	]
+};
 
 var work = {
 	"jobs": [
@@ -31,37 +75,7 @@ var work = {
 		"city": "Napa, CA",
 		"description": "HTML5, CSS3, JavaScript, Twitter Bootstrap. Did freelance work building websites for multiple businesses."
 		}
-
-
 	]
-};
-
-var education = {
-	"schools": [
-		{
-		"school": "Arizona State University",
-		"graduation": "May 2016",
-		"city": "Tempe, AZ",
-		"major": "Psychology",
-		"degree": "B.A." 
-		},
-
-		{
-		"school": "Napa Valley College",
-		"graduation": "May 2011",
-		"city": "Napa, CA",
-		"major": "Psychology",
-		"degree": "A.A."
-		},
-		{
-		"school": "Udacity",
-		"graduation": "July 2016",
-		"city": "Online",
-		"major": "Front-End Web Developement",
-		"degree": "Nanodegree"
-		}
-	]
-
 };
 
 var projects = {
@@ -80,9 +94,22 @@ var projects = {
 	}
 	]
 };
+main.display = (function() {
+	var name = bio.name.trim().split(" ");
+	name[1] = name[1].toUpperCase();
+	name[0] = name[0].slice(0, 1).toUpperCase() + name[0].slice(1).toLowerCase();
+	return name[0] + " "+ name[1];
+	
 
-if (bio.skills.length > 0) {
+})();
+$("#main").append(internationalizeButton);
 
+
+header.display = (function() {
+	var formattedName = HTMLheaderName.replace("%data%", "Kadie Ford");
+	var formattedRole = HTMLheaderRole.replace("%data%", "Front-End Web Developer");
+	$("#header").prepend(formattedRole);$("#main").append(internationalizeButton);
+	$("#header").prepend(formattedName);
 	$("#header").append(HTMLskillsStart);
 	var formattedSkills = HTMLskills.replace("%data%", bio.skills[0]);
 	$("#skills").append(formattedSkills);
@@ -92,9 +119,17 @@ if (bio.skills.length > 0) {
 	$("#skills").append(formattedSkills);
 	formattedSkills = HTMLskills.replace("%data%", bio.skills[3]);
 	$("#skills").append(formattedSkills);
-};
+	var formattedContactInfo = [];
+	formattedContactInfo.push(HTMLemail.replace("%data%", bio.contacts.email));
+	formattedContactInfo.push(HTMLgithub.replace("%data%", bio.contacts.github));
+	formattedContactInfo.push(HTMLlocation.replace("%data%", bio.contacts.location));
+	$("#topContacts").append(formattedContactInfo);
 
-function displayWork() {
+})();
+
+
+
+workExperience.display = (function() {
 	for (job in work.jobs) {
 		$("#workExperience").append(HTMLworkStart);
 		var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
@@ -106,10 +141,8 @@ function displayWork() {
 		var formattedDescription = HTMLworkDescription.replace("%data%", work.jobs[job].description);
 		$(".work-entry:last").append(formattedDescription);
 	}
-}
+})();
 
-
-displayWork();
 
 $(document).click(function(loc) {
 	var x = loc.pageX;
@@ -117,17 +150,6 @@ $(document).click(function(loc) {
 	logClicks(x, y);
 
 });
-
-function inName(name) {
-	name = name.trim().split(" ");
-	console.log(name);
-	name[1] = name[1].toUpperCase();
-	name[0] = name[0].slice(0, 1).toUpperCase() + name[0].slice(1).toLowerCase();
-	return name[0] + " "+ name[1]
-
-};
-$("#main").append(internationalizeButton);
-// $("#main").append(education.schools);
 
 projects.display = (function() {
 	for (project in projects.projects) {
@@ -143,8 +165,46 @@ projects.display = (function() {
 				var formattedImage = HTMLprojectImage.replace("%data%", projects.projects[project].images[image]);
 				$(".project-entry:last").append(formattedImage)
 			}
-
 		}
 	}
 })();
+
+education.display = function() {
+	if(education.schools.length > 0 || education.onlineCourses.length > 0) {
+		for(i in education.schools) {
+			$("#education").append(HTMLschoolStart);
+
+			var formattedSchoolName = HTMLschoolName.replace("%data%", education.schools[i].name).replace("#", education.schools[i].url);
+			var formattedSchoolDegree = HTMLschoolDegree.replace("%data%", education.schools[i].degree);
+			var formattedSchoolDates = HTMLschoolDates.replace("%data%", education.schools[i].dates);
+			var formattedSchoolLocation = HTMLschoolLocation.replace("%data%", education.schools[i].location);			
+			var formattedSchoolMajor = HTMLschoolMajor.replace("%data%", education.schools[i].major);
+
+			$(".education-entry:last").append(formattedSchoolName + formattedSchoolDegree);
+			$(".education-entry:last").append(formattedSchoolDates);
+			$(".education-entry:last").append(formattedSchoolLocation);
+			$(".education-entry:last").append(formattedSchoolMajor);
+		}
+
+		if(education.onlineCourses.length > 0) {
+			$("#education").append(HTMLonlineClasses);
+			for(i in education.onlineCourses) {				
+				$("#education").append(HTMLschoolStart);
+				var formattedOnlineTitle = HTMLonlineTitle.replace("%data%", education.onlineCourses[i].title).replace("#", education.onlineCourses[i].url);
+				var formattedOnlineSchool = HTMLonlineSchool.replace("%data%", education.onlineCourses[i].school);
+				var formattedOnlineDates = HTMLonlineDates.replace("%data%", education.onlineCourses[i].dates);
+				var formattedOnlineURL = HTMLonlineURL.replace("%data%", education.onlineCourses[i].url).replace("#", education.onlineCourses[i].url);
+
+				$(".education-entry:last").append(formattedOnlineTitle + formattedOnlineSchool);
+				$(".education-entry:last").append(formattedOnlineDates);
+				$(".education-entry:last").append(formattedOnlineURL);
+			}
+		}
+		
+	}
+}
+
+education.display();
+
+
 $("#mapDiv").append(googleMap);
