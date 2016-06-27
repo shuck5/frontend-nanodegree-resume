@@ -65,14 +65,14 @@ var work = {
 		"title": "Office Manager",
 		"employer": "Napa Winery Inn",
 		"dates": "08/2012 - Present",
-		"city": "Napa, CA",
+		"location": "Napa, CA",
 		"description": "Human Resources, Social Media Manager, Accounting, Customer Service, Multiple Phone Lines, Excel, MS Office"
 		},
 		{
 		"title": "Freelance Website Builder",
 		"employer": "Freelance",
 		"dates": "03/2016 - Present",
-		"city": "Napa, CA",
+		"location": "Napa, CA",
 		"description": "HTML5, CSS3, JavaScript, Twitter Bootstrap. Did freelance work building websites for multiple businesses."
 		}
 	]
@@ -100,9 +100,9 @@ var formattedBioPic = HTMLbioPic.replace("%data%", bio.biopic);
 var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
 
 var formattedContactInfo = [];
-formattedContactInfo.push(HTMLemail.replace("%data%", bio.contacts.email));
-formattedContactInfo.push(HTMLgithub.replace("%data%", bio.contacts.github));
-formattedContactInfo.push(HTMLlocation.replace("%data%", bio.contacts.location));
+formattedContactInfo.push(HTMLemail.replace("%data%", bio.contacts[0].email));
+formattedContactInfo.push(HTMLgithub.replace("%data%", bio.contacts[0].github));
+formattedContactInfo.push(HTMLlocation.replace("%data%", bio.contacts[0].location));
 
 
 $("#header").prepend(formattedRole);
